@@ -1,0 +1,53 @@
+# Binaries
+*.exe
+*.exe~
+*.dll
+*.so
+*.dylib
+*.test
+*.out
+
+# Go
+bin/
+vendor/
+*.test
+coverage.txt
+
+# Node
+node_modules/
+dist/
+dist-ssr/
+*.local
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# IDE
+.idea/
+.vscode/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+# Test
+coverage/
+
+# Temporary
+*.tmp
+*.temp
+
+# Ai ide config
+.trae
