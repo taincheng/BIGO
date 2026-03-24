@@ -22,5 +22,5 @@ func main() {
 func initSystem() {
 	// 初始化 viper, 读取配置文件
 	global.BIGO_VIPER = core.Viper()
-
+	global.BIGO_LOG = core.Zap()
 }
