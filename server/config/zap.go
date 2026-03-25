@@ -41,13 +41,14 @@ func (c *Zap) Encoder() zapcore.Encoder {
 		MessageKey:    "message",
 		StacktraceKey: c.StacktraceKey,
 		LineEnding:    zapcore.DefaultLineEnding,
-		EncodeTime: func(t time.Time, encoder zapcore.PrimitiveArrayEncoder) {
+		EncodeTime: func(t time.Time, encoder zapcore.PrimitiveArrayEncoder) { // 自定义时间格式化函数
 			encoder.AppendString(c.Prefix + t.Format("2006-01-02 15:04:05.000"))
 		},
-		EncodeLevel:    c.LevelEncoder(),
-		EncodeCaller:   zapcore.FullCallerEncoder,
-		EncodeDuration: zapcore.SecondsDurationEncoder,
+		EncodeLevel:    c.LevelEncoder(),               // 决定如何格式化日志级别
+		EncodeCaller:   zapcore.FullCallerEncoder,      // 使用完整路径编码器
+		EncodeDuration: zapcore.SecondsDurationEncoder, // 将时间段编码为秒数
 	}
+	// 根据格式选择 Encoder
 	if c.Format == "json" {
 		return zapcore.NewJSONEncoder(config)
 	}

@@ -34,6 +34,7 @@ func (z *ZapCore) WriteSyncer(formats ...string) zapcore.WriteSyncer {
 		CutterWithLayout(time.DateOnly),
 		CutterWithFormats(formats...),
 	)
+	// 同时输出到控制台和文件
 	if global.BIGO_CONFIG.Zap.LogInConsole {
 		multiSyncer := zapcore.NewMultiWriteSyncer(os.Stdout, cutter)
 		return zapcore.AddSync(multiSyncer)

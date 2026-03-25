@@ -3,6 +3,9 @@ package main
 import (
 	"server/core"
 	"server/global"
+	"server/initialize"
+
+	"go.uber.org/zap"
 )
 
 // @title                       BIGO Swagger API接口文档
@@ -22,5 +25,12 @@ func main() {
 func initSystem() {
 	// 初始化 viper, 读取配置文件
 	global.BIGO_VIPER = core.Viper()
+	// 初始化 zap，配置日志
 	global.BIGO_LOG = core.Zap()
+	// zap 提供的线程安全的方式
+	zap.ReplaceGlobals(global.BIGO_LOG)
+	global.BIGO_DB = initialize.Gorm()
+	if global.BIGO_DB != nil {
+		initialize.RegisterTables() // 初始化表
+	}
 }
