@@ -1,3 +1,4 @@
+//go:generate swag init
 package main
 
 import (
@@ -19,6 +20,7 @@ func main() {
 	// 初始化服务
 	initSystem()
 	// 运行服务
+	core.RunServer()
 }
 
 // initSystem 初始化系统所有需要用到的组件

@@ -1,0 +1,12 @@
+info:
+  contact: {}
+  description: gin+vue的BI系统
+  title: BIGO Swagger API接口文档
+  version: v1.0.0
+paths: {}
+securityDefinitions:
+  ApiKeyAuth:
+    in: header
+    name: x-token
+    type: apiKey
+swagger: "2.0"
