@@ -4,7 +4,7 @@ import "time"
 
 type SysAuthority struct {
 	// 创建时间
-	CreatedAt time.Time
+	CreatedAt time.Time `gorm:""`
 	// 更新时间
 	UpdatedAt time.Time
 	DeletedAt *time.Time `gorm:"index"`

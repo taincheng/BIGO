@@ -8,6 +8,6 @@ func (u *UserRouter) InitUserRouter(Router *gin.RouterGroup) {
 	userRouter := Router.Group("user")
 
 	{
-		userRouter.POST("admin_register") // 管理员注册账号
+		userRouter.POST("admin_register", baseApi.Register) // 管理员注册账号
 	}
 }

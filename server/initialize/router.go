@@ -1,17 +1,30 @@
 package initialize
 
 import (
+	"server/docs"
+	"server/global"
+	"server/router"
+
 	"github.com/gin-gonic/gin"
+	swaggerFiles "github.com/swaggo/files"
+	ginSwagger "github.com/swaggo/gin-swagger"
 )
 
 // Routers 初始化路由
 func Routers() *gin.Engine {
 	Router := gin.New()
 
-	//systemRouter := router.RouterGroupApp.System
+	docs.SwaggerInfo.BasePath = global.BIGO_CONFIG.System.RouterPrefix
+	Router.GET(global.BIGO_CONFIG.System.RouterPrefix+"/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
+
+	systemRouter := router.RouterGroupApp.System
+
+	PrivateGroup := Router.Group(global.BIGO_CONFIG.System.RouterPrefix)
 
 	{
-		//systemRouter.InitUserRouter(Router)
+		systemRouter.InitUserRouter(PrivateGroup)
 	}
+	global.BIGO_ROUTER = Router.Routes()
+	global.BIGO_LOG.Info("router register success")
 	return Router
 }

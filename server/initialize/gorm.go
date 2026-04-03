@@ -3,6 +3,7 @@ package initialize
 import (
 	"os"
 	"server/global"
+	"server/model/system"
 
 	"go.uber.org/zap"
 	"gorm.io/gorm"
@@ -27,7 +28,13 @@ func RegisterTables() {
 
 	db := global.BIGO_DB
 	// 迁移系统必备表
-	err := db.AutoMigrate()
+	err := db.AutoMigrate(
+		system.SysUser{},
+		system.SysAuthority{},
+		system.SysBaseMenu{},
+		system.SysBaseMenuBtn{},
+		system.SysBaseMenuParameter{},
+	)
 	if err != nil {
 		global.BIGO_LOG.Error("register table failed", zap.Error(err))
 		os.Exit(0)
