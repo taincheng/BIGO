@@ -40,3 +40,11 @@ func FailWithMessage(message string, c *gin.Context) {
 func FailWithDetailed(data interface{}, message string, c *gin.Context) {
 	Result(ERROR, data, message, c)
 }
+
+func NoAuth(message string, c *gin.Context) {
+	c.JSON(http.StatusUnauthorized, Response{
+		ERROR,
+		nil,
+		message,
+	})
+}

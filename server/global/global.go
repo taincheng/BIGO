@@ -6,6 +6,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"github.com/spf13/viper"
 	"go.uber.org/zap"
+	"golang.org/x/sync/singleflight"
 	"gorm.io/gorm"
 )
 
@@ -16,4 +17,5 @@ var (
 	BIGO_ACTIVE_DBNAME *string
 	BIGO_DB            *gorm.DB
 	BIGO_ROUTER        gin.RoutesInfo
+	BIGO_SINGLEFLIGHT  = &singleflight.Group{}
 )
