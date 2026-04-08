@@ -9,3 +9,10 @@ type Register struct {
 	Phone        string `json:"phone" example:"电话号码"`
 	Email        string `json:"email" example:"电子邮箱"`
 }
+
+type Login struct {
+	Username  string `json:"username" binding:"required" example:"用户名"`
+	Password  string `json:"password" binding:"required" example:"密码"`
+	Captcha   string `json:"captcha" binding:"required" example:"验证码"`
+	CaptchaId string `json:"captchaId" binding:"required" example:"验证码id"`
+}

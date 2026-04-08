@@ -62,3 +62,17 @@ func GetClaims(c *gin.Context) (*systemReq.CustomClaims, error) {
 	}
 	return claims, nil
 }
+
+// ClearToken 清除token
+func ClearToken(c *gin.Context) {
+	host, _, err := net.SplitHostPort(c.Request.Host)
+	if err != nil {
+		host = c.Request.Host
+	}
+	// 判断 host 是否为 IP，如果是 ip，则将 Domain 设置为空字符串，避免cookie被限制
+	if net.ParseIP(host) != nil {
+		c.SetCookie(global.TokenKey, "", -1, "/", "", false, false)
+	} else {
+		c.SetCookie(global.TokenKey, "", -1, "/", host, false, false)
+	}
+}

@@ -6,6 +6,8 @@ import (
 	"server/model/system"
 	systemReq "server/model/system/request"
 	systemRes "server/model/system/response"
+	"server/utils"
+	"time"
 
 	"github.com/gin-gonic/gin"
 	"go.uber.org/zap"
@@ -49,4 +51,31 @@ func (b *BaseApi) Register(c *gin.Context) {
 		return
 	}
 	response.OkWithDetailed(systemRes.SysUserResponse{User: user}, "注册成功", c)
+}
+
+// Login
+// @Tags SysUser
+// @Summary 用户登录
+// @Produce  application/json
+// @Param data body systemReq.LoginReq true "用户名, 密码"
+func (b *BaseApi) Login(c *gin.Context) {
+	var login systemReq.Login
+	if err := c.ShouldBindJSON(login); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+	clientIP := c.ClientIP()
+	// 判断验证码是否开启
+	openCaptcha := global.BIGO_CONFIG.Captcha.OpenCaptcha
+	openCaptchaTimeOut := global.BIGO_CONFIG.Captcha.OpenCaptchaTimeOut
+	// 从缓存中获取目标 ip 获取过几次验证码
+	value, ok := global.LocalCache.Get(clientIP)
+	if !ok {
+		// 第一次请求验证码，加入缓存
+		global.LocalCache.Set(clientIP, 1, time.Second*time.Duration(openCaptchaTimeOut))
+	}
+	// 获取验证码的次数是否达到防爆次数
+	var oc bool = openCaptcha == 0 || openCaptcha < utils.InterfaceToInt(value)
+	// TODO
+	//if oc && (login.Captcha == "" || login.CaptchaId == "" || )
 }
