@@ -34,6 +34,7 @@ func RegisterTables() {
 		system.SysBaseMenu{},
 		system.SysBaseMenuBtn{},
 		system.SysBaseMenuParameter{},
+		system.SysLoginLog{},
 	)
 	if err != nil {
 		global.BIGO_LOG.Error("register table failed", zap.Error(err))

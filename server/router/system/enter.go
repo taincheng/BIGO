@@ -4,6 +4,7 @@ import v1 "server/api/v1"
 
 type RouterGroup struct {
 	UserRouter
+	BaseRouter
 }
 
 var (

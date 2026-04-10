@@ -5,7 +5,9 @@ import (
 	"server/core"
 	"server/global"
 	"server/initialize"
+	"time"
 
+	"github.com/songzhibin97/gkit/cache/local_cache"
 	"go.uber.org/zap"
 )
 
@@ -29,6 +31,9 @@ func initSystem() {
 	global.BIGO_VIPER = core.Viper()
 	// 初始化 zap，配置日志
 	global.BIGO_LOG = core.Zap()
+	global.LocalCache = local_cache.NewCache(
+		local_cache.SetDefaultExpire(time.Duration(global.BIGO_CONFIG.JWT.ExpiresTime) * time.Second),
+	)
 	// zap 提供的线程安全的方式
 	zap.ReplaceGlobals(global.BIGO_LOG)
 	global.BIGO_DB = initialize.Gorm()

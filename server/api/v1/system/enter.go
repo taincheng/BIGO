@@ -7,5 +7,6 @@ type ApiGroup struct {
 }
 
 var (
-	userService = service.ServiceGroupApp.SystemServiceGroup.UserService
+	userService     = service.ServiceGroupApp.SystemServiceGroup.UserService
+	LoginLogService = service.ServiceGroupApp.SystemServiceGroup.LoginLogService
 )

@@ -23,3 +23,21 @@ func (UserService *UserService) Register(u *system.SysUser) (err error) {
 	err = global.BIGO_DB.Create(u).Error
 	return err
 }
+
+func (UserService *UserService) Login(u *system.SysUser) (userInfo *system.SysUser, err error) {
+	var user system.SysUser
+	err = global.BIGO_DB.Where("username = ?", u.Username).
+		Preload("Authorities").
+		Preload("Authority").
+		First(&user).
+		Error
+	if err == nil {
+		if ok := utils.BcryptCheck(u.Password, user.Password); !ok {
+			return nil, errors.New("密码错误")
+		}
+		// 获取用户默认菜单
+		MenuServiceApp.UserAuthorityDefaultRouter(&user)
+	}
+
+	return &user, err
+}
