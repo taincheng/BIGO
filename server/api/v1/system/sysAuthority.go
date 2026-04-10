@@ -1,6 +1,13 @@
 package system
 
-import "github.com/gin-gonic/gin"
+import (
+	"server/global"
+	"server/model/common/response"
+	"server/model/system"
+	"server/utils"
+
+	"github.com/gin-gonic/gin"
+)
 
 type AuthorityApi struct{}
 
@@ -14,5 +21,14 @@ type AuthorityApi struct{}
 // @Success   200   {object}  response.Response{data=systemRes.SysAuthorityResponse,msg=string}  "创建角色,返回包括系统角色详情"
 // @Router    /authority/createAuthority [post]
 func (a *AuthorityApi) CreateAuthority(c *gin.Context) {
+	var authority system.SysAuthority
+	if err := c.ShouldBindJSON(&authority); err != nil {
+		response.FailWithMessage(err.Error(), c)
+		return
+	}
+
+	if *authority.ParentId == 0 && global.BIGO_CONFIG.System.UseStrictAuth {
+		authority.ParentId = utils.Ptr(utils.GetUserAuthorityId(c))
+	}
 
 }

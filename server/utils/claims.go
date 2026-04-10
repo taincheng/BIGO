@@ -76,3 +76,17 @@ func ClearToken(c *gin.Context) {
 		c.SetCookie(global.TokenKey, "", -1, "/", host, false, false)
 	}
 }
+
+// GetUserAuthorityId 获取用户角色 id
+func GetUserAuthorityId(c *gin.Context) uint {
+	if claims, exists := c.Get("claims"); !exists {
+		if cl, err := GetClaims(c); err != nil {
+			return 0
+		} else {
+			return cl.AuthorityId
+		}
+	} else {
+		customClaims := claims.(*systemReq.CustomClaims)
+		return customClaims.AuthorityId
+	}
+}

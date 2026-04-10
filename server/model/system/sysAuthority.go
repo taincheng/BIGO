@@ -9,9 +9,9 @@ type SysAuthority struct {
 	UpdatedAt time.Time
 	DeletedAt *time.Time `gorm:"index"`
 	// 角色ID
-	AuthorityId uint `json:"authorityId" gorm:"not null;unique;primary_key;comment:角色ID;size:90"`
+	AuthorityId uint `json:"authorityId" binding:"required" gorm:"not null;unique;primary_key;comment:角色ID;size:90"`
 	// 角色名
-	AuthorityName string `json:"authorityName" gorm:"comment:角色名"`
+	AuthorityName string `json:"authorityName" binding:"required" gorm:"comment:角色名"`
 	// 父角色ID
 	ParentId *uint `json:"parentId" gorm:"comment:父角色ID"`
 	// 角色之间多对多关系，gorm 自动创建 sys_data_authority_id 映射表

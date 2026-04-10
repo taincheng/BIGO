@@ -26,3 +26,17 @@ func InterfaceToInt(i interface{}) int {
 		return 0
 	}
 }
+
+// Ptr 获取指针
+func Ptr[T any](v T) *T {
+	return &v
+}
+
+// ToPtrSlice 将值切片转换为指针切片
+func ToPtrSlice[T any](slice []T) []*T {
+	result := make([]*T, len(slice))
+	for i := range slice {
+		result[i] = &slice[i]
+	}
+	return result
+}
