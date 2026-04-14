@@ -5,6 +5,7 @@ import (
 	"server/global"
 	"server/model/system"
 
+	gormadapter "github.com/casbin/gorm-adapter/v3"
 	"go.uber.org/zap"
 	"gorm.io/gorm"
 )
@@ -35,6 +36,7 @@ func RegisterTables() {
 		system.SysBaseMenuBtn{},
 		system.SysBaseMenuParameter{},
 		system.SysLoginLog{},
+		gormadapter.CasbinRule{},
 	)
 	if err != nil {
 		global.BIGO_LOG.Error("register table failed", zap.Error(err))

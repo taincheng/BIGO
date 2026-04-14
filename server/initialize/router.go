@@ -41,6 +41,7 @@ func Routers() *gin.Engine {
 
 	{
 		systemRouter.InitUserRouter(PrivateGroup)
+		systemRouter.InitAuthorityRouter(PrivateGroup)
 	}
 	global.BIGO_ROUTER = Router.Routes()
 	global.BIGO_LOG.Info("router register success")

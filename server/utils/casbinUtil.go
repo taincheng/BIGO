@@ -43,9 +43,13 @@ func GetCasbin() *casbin.SyncedCachedEnforcer {
 			global.BIGO_LOG.Error("加载 casbin 模型失败")
 			return
 		}
-		syncedCachedEnforcer, _ := casbin.NewSyncedCachedEnforcer(fromString, db)
+		syncedCachedEnforcer, _ = casbin.NewSyncedCachedEnforcer(fromString, db)
 		syncedCachedEnforcer.SetExpireTime(60 * 60)
-		_ = syncedCachedEnforcer.LoadPolicy()
+		err = syncedCachedEnforcer.LoadPolicy()
+		if err != nil {
+			global.BIGO_LOG.Error("加载 casbin 策略失败")
+			return
+		}
 	})
 	return syncedCachedEnforcer
 }
