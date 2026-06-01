@@ -52,3 +52,4 @@ coverage/
 
 # Ai ide config
 .trae
+.gstack/
